@@ -31,7 +31,7 @@ export const getSharkAttackByActivity = async (req, res) => {
 export const updateSharkAttackgreatWhite = async (req, res) => {
   try {
     const {species} = req.params;
-    const attacks  = await attacks.updateMany(species,great white);
+    const attacks  = await attacks.updateMany(species,"greatwhite");
     
     res.status(201).json(attacks);
   } catch (error) {
