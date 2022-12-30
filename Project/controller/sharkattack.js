@@ -20,7 +20,6 @@ export const getSharkAttackByActivity = async (req, res) => {
     if (sharkAttak) {
       return res.json(sharkAttak)
     }
-    
     res.status(404).json({message: "activity not found!"});
   } catch (error) {
     console.error(error);
@@ -31,7 +30,7 @@ export const getSharkAttackByActivity = async (req, res) => {
 export const updateSharkAttackgreatWhite = async (req, res) => {
   try {
     const {species} = req.params;
-    const attacks  = await attacks.updateMany(species,"greatwhite");
+    const attacks  = await attacks.updateMany("field:species","greatwhite");
     
     res.status(201).json(attacks);
   } catch (error) {
@@ -57,8 +56,8 @@ export const getSharkDate = async (req, res) => {
 
 export const deletejury = async (req, res) => {
   try {
-    const { sharkAttack } = req.params;
-    const attacks = await attacks.deleteMany({fatal:/N/,Nq:{$gte: 5}});
+    const {injuries } = req.params;
+    const attacks = await attacks.deleteMany("fatal_y_n:N,Nq");
 
     if (deleted) {
       return res.status(200).send("injuries are deleted!")
