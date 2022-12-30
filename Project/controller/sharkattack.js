@@ -15,21 +15,25 @@ export const getSharkAttacks = async (req, res) => {
 export const getSharkAttackByActivity = async (req, res) => {
   try {
     const { activity } = req.params
-    const sharkAttck = await attacks.find({"field:activity": activity});
-    res.json(sharkAttck);
+    const sharkAttak = await attacks.find({"field:activity": activity});
+
+    if (sharkAttak) {
+      return res.json(sharkAttak)
+    }
+    
+    res.status(404).json({message: "activity not found!"});
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      error: error.message
-    })
+    res.status(500).json({error: error.message });
   }
 };
 
-export const getSharkAttackgreatWhite = async (req, res) => {
+export const updateSharkAttackgreatWhite = async (req, res) => {
   try {
-    const {greatWhite} = req.params;
-    const attacks  = await attacks.find("field:species").where("great white")
-    res.json(attacks);
+    const {species} = req.params;
+    const attacks  = await attacks.updateMany(species,great white);
+    
+    res.status(201).json(attacks);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -40,7 +44,7 @@ export const getSharkAttackgreatWhite = async (req, res) => {
 
 export const getSharkDate = async (req, res) => {
   try {
-    const { sharkAttack  } = req.params;
+    const { sharkAttackDate  } = req.params;
     const attacks = await attacks.find("field:date");
     res.json(attacks)
   } catch (error) {
@@ -51,14 +55,18 @@ export const getSharkDate = async (req, res) => {
   }
 };
 
-export const getInjury = async (req, res) => {
+export const deletejury = async (req, res) => {
   try {
     const { sharkAttack } = req.params;
-    const attacks = await attacks.find("fatal_y_n:enum:N,Nq")
-    res.status(201).json(attacks)
-  } catch {
-    res.status(500).json({
-      error: error.message
-    })
+    const attacks = await attacks.deleteMany({fatal:/N/,Nq:{$gte: 5}});
+
+    if (deleted) {
+      return res.status(200).send("injuries are deleted!")
+    }
+
+    throw new Error("injuries not found!")
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: error.message});
   }
 };
