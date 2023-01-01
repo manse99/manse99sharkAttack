@@ -12,13 +12,13 @@ export const getSharkAttacks = async (req, res) => {
   }
 };
 
-export const getSharkAttackByActivity = async (req, res) => {
+export const getSharkAttacksActivity = async (req, res) => {
   try {
-    const { activity } = req.params
-    const sharkAttak = await attacks.find({"field:activity": activity});
+    const {fields } = req.params
+    const sharkAttack = await sharkAttack.findById("fields:surfing");
 
-    if (sharkAttak) {
-      return res.json(sharkAttak)
+    if (sharkAttack) {
+      return res.json(sharkAttack)
     }
     res.status(404).json({message: "activity not found!"});
   } catch (error) {
@@ -27,12 +27,12 @@ export const getSharkAttackByActivity = async (req, res) => {
   }
 };
 
-export const updateSharkAttackgreatWhite = async (req, res) => {
+export const updateSharkAttackActivity = async (req, res) => {
   try {
-    const {species} = req.params;
-    const attacks  = await attacks.updateMany("field:species","greatwhite");
+    const {type} = req.params;
+    const sharkAttack  = await SharkAttack.findMany("fields:type", "Unprovoked");
     
-    res.status(201).json(attacks);
+    res.status(201).json(sharkAttack);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -43,8 +43,8 @@ export const updateSharkAttackgreatWhite = async (req, res) => {
 
 export const getSharkDate = async (req, res) => {
   try {
-    const { sharkAttackDate  } = req.params;
-    const attacks = await attacks.find("field:date");
+    const { Date } = req.params;
+    const attacks = await attacks.findOne("fields:date", "1970");
     res.json(attacks)
   } catch (error) {
     console.error(error);
@@ -54,18 +54,3 @@ export const getSharkDate = async (req, res) => {
   }
 };
 
-export const deletejury = async (req, res) => {
-  try {
-    const {injuries } = req.params;
-    const attacks = await attacks.deleteMany("fatal_y_n:N,Nq");
-
-    if (deleted) {
-      return res.status(200).send("injuries are deleted!")
-    }
-
-    throw new Error("injuries not found!")
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({error: error.message});
-  }
-};
