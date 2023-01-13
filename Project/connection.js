@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
-//let mongooseConnectionConfig = {useNewUrlParser: true, useUnifiedTopology: true} 
+let mongooseConnectionConfig = {useNewUrlParser: true, useUnifiedTopology: true} 
 //mongoose.connect('mongodb://localhost:27017/sharkAPI', mongooseConnectionConfig);
 const url = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/sharkAPI'
 
-mongoose.connect(url , mongooseConfig)
-
-
+mongoose.connect(url , mongooseConnectionConfig)
 
 mongoose.set('strictQuery', true)
 
