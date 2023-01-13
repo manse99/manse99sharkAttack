@@ -14,7 +14,11 @@ app.use("/api", routes);
 db.on("connected", () =>{
  console.clear();
  console.log("Connected to MongoDB!")
- app.listen(PORT, () => {
-  console.log(`My Express DataBase is now running on http://localhost: ${PORT}`);
- });
+// app.listen(PORT, () => {
+ // console.log(`My Express DataBase is now running on http://localhost: ${PORT}`);
+const port = process.env.PORT || 3000
+
+app.listen(port, () => console.log(`app listening on port ${port}`))
+
+
 });

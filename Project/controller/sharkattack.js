@@ -12,10 +12,23 @@ export const getSharkAttacks = async (req, res) => {
   }
 };
 
+export const getSharkAttack = async (req, res) => {
+  try {
+      const { id } = req.params
+    const sharkAttack = await attacks.findById(id);
+    res.json(sharkAttack);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: error.message
+    })
+  }
+};
+
 export const getSharkAttacksActivity = async (req, res) => {
   try {
-    const {fields } = req.params
-    const sharkAttack = await sharkAttack.findById("fields:surfing");
+    const { activity } = req.params
+    const sharkAttack = await attacks.find({"fields.activity": activity});
 
     if (sharkAttack) {
       return res.json(sharkAttack)
@@ -29,22 +42,20 @@ export const getSharkAttacksActivity = async (req, res) => {
 
 export const updateSharkAttackActivity = async (req, res) => {
   try {
-    const {type} = req.params;
-    const sharkAttack  = await SharkAttack.findMany("fields:type", "Unprovoked");
+    const { Unprovoked } = req.params
+    const sharkAttack  = await attacks.findOne({"fields.type": Unprovoked});
     
     res.status(201).json(sharkAttack);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      error: error.message
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const getSharkDate = async (req, res) => {
   try {
-    const { Date } = req.params;
-    const attacks = await attacks.findOne("fields:date", "1970");
+    const { date } = req.params;
+    const attacks = await attacks.findOne({"fields.date": date});
     res.json(attacks)
   } catch (error) {
     console.error(error);
