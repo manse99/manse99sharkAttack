@@ -14,7 +14,7 @@ export const getSharkAttacks = async (req, res) => {
 
 export const getSharkAttack = async (req, res) => {
   try {
-      const { id } = req.params
+    const { id } = req.params
     const sharkAttack = await attacks.findById(id);
     res.json(sharkAttack);
   } catch (error) {
@@ -40,11 +40,24 @@ export const getSharkAttacksActivity = async (req, res) => {
   }
 };
 
-export const updateSharkAttackActivity = async (req, res) => {
+// Create the function for generating a new record in the database
+export const createSharkAttackRecord = async (req, res) => {
+    try {
+        const sharkAttack = new attacks(req.body)
+        await sharkAttack.save()
+        res.status(201).json(sharkAttack)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: error.message })
+    }
+}
+
+// Update the naming convention based on the change to Project/routes/sharkattack.js and update functionality of findOne() to findByIdAndUpdate()
+export const updateSharkAttackRecord = async (req, res) => {
   try {
-    const { Unprovoked } = req.params
-    const sharkAttack  = await attacks.findOne({"fields.type": Unprovoked});
-    
+    const { id } = req.params
+    const sharkAttack  = await attacks.findByIdAndUpdate(id, req.body);
+
     res.status(201).json(sharkAttack);
   } catch (error) {
     console.error(error);
@@ -52,16 +65,14 @@ export const updateSharkAttackActivity = async (req, res) => {
   }
 };
 
-export const getSharkDate = async (req, res) => {
+// Update the naming convention based on the change to Project/routes/sharkattack.js and update the functionality of findOne() to findOneAndDelete()
+export const deleteSharkAttackRecord = async (req, res) => {
   try {
-    const { date } = req.params;
-    const attacks = await attacks.findOne({"fields.date": date});
-    res.json(attacks)
+    const { id } = req.params;
+    const attackDeleted = await attacks.findOneAndDelete(id);
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      error: error.message
-    })
+    res.status(500).json({ error: error.message })
   }
 };
 
