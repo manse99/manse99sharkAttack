@@ -69,7 +69,7 @@ export const updateSharkAttackRecord = async (req, res) => {
 export const deleteSharkAttackRecord = async (req, res) => {
   try {
     const { id } = req.params;
-    const attackDeleted = await attacks.findOneAndDelete(id);
+    const attackDeleted = await attacks.findByIdAndDelete(id);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message })
